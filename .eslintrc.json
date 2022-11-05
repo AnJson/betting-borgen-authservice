@@ -1,0 +1,6 @@
+{
+  "extends": "@lnu",
+  "rules": {
+    "jsdoc/require-jsdoc": "off"
+  }
+}
