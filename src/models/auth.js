@@ -93,15 +93,8 @@ const schema = new mongoose.Schema({
      */
     get: value => cryptography.decrypt(value)
   },
-  username: {
-    type: String,
-    required: [true, 'Username is required.'],
-    unique: true,
-    // - A valid username should start with an alphabet so, [A-Za-z].
-    // - All other characters can be alphabets, numbers or an underscore so, [A-Za-z0-9_-].
-    // - Since length constraint is 3-256 and we had already fixed the first character, so we give {2, 255}.
-    // - We use ^ and $ to specify the beginning and end of matching.
-    match: [/^[A-Za-z][A-Za-z0-9_-]{2,255}$/, 'Please provide a valid username.']
+  isAdmin: {
+    type: boolean
   },
   password: {
     type: String,
@@ -146,7 +139,7 @@ schema.pre('save', async function (next) {
  *
  * @param {string} username - Users username.
  * @param {string} password - Users password.
- * @returns {Promise<User>} - Promise for the user-object from db.
+ * @returns {Promise<Auth>} - Promise for the user-object from db.
  */
 schema.statics.authenticate = async function (username, password) {
   const user = await this.findOne({ username })
@@ -161,4 +154,4 @@ schema.statics.authenticate = async function (username, password) {
 }
 
 // Create a model using the schema.
-export const User = mongoose.model('User', schema)
+export const Auth = mongoose.model('Auth', schema)
