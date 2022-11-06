@@ -94,7 +94,7 @@ const schema = new mongoose.Schema({
     get: value => cryptography.decrypt(value)
   },
   isAdmin: {
-    type: boolean
+    type: Boolean
   },
   password: {
     type: String,
