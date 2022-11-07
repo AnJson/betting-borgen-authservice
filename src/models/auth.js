@@ -1,5 +1,5 @@
 /**
- * Mongoose model User.
+ * Mongoose model Auth.
  *
  * @author Anders Jonsson
  * @version 1.0.0
@@ -101,8 +101,7 @@ const schema = new mongoose.Schema({
     minLength: [10, 'The password must be of minimum length 10 characters.'],
     maxLength: [256, 'The password must be of maximum length 256 characters.'],
     required: [true, 'Password is required.']
-  },
-  permissionLevel: Number
+  }
 }, {
   timestamps: true,
   toJSON: {
@@ -125,24 +124,15 @@ schema.virtual('id').get(function () {
   return this._id.toHexString()
 })
 
-// Salts and hashes password before save.
 schema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next()
 
-  // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12)
 })
 
-/**
- * Authenticates a user.
- *
- * @param {string} username - Users username.
- * @param {string} password - Users password.
- * @returns {Promise<Auth>} - Promise for the user-object from db.
- */
-schema.statics.authenticate = async function (username, password) {
-  const user = await this.findOne({ username })
+schema.statics.authenticate = async function (email, password) {
+  const user = await this.findOne({ email })
 
   // If no user found or password is wrong, throw an error.
   if (!user || !(await bcrypt.compare(password, user.password))) {

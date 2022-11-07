@@ -22,12 +22,11 @@ export class AccountController {
    */
   async login (req, res, next) {
     try {
-      const user = await Auth.authenticate(req.body.username, req.body.password)
+      const user = await Auth.authenticate(req.body.email, req.body.password)
       const formattedUser = user.toJSON()
 
       const payload = {
-        sub: formattedUser.id,
-        x_is_admin: formattedUser.isAdmin
+        sub: formattedUser.id
       }
 
       // Create the access token with the shorter lifespan.
