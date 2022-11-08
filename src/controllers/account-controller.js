@@ -26,20 +26,24 @@ export class AccountController {
       const formattedUser = user.toJSON()
 
       const payload = {
-        sub: formattedUser.id
+        sub: formattedUser.id,
+        x_email: formattedUser.email
       }
-
       // Create the access token with the shorter lifespan.
       const accessToken = jwt.sign(payload, Buffer.from(process.env.ACCESS_TOKEN_SECRET, 'base64'), {
         algorithm: 'RS256',
         expiresIn: process.env.ACCESS_TOKEN_LIFE
       })
+      console.log('im here')
 
       // Authentication successful.
       res
         .status(200)
         .json({
-          access_token: accessToken
+          access_token: accessToken,
+          firstname: formattedUser.firstname,
+          lastname: formattedUser.lastname,
+          id: formattedUser.id
         })
     } catch (error) {
       // Authentication failed or server-error.
