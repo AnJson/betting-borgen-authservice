@@ -8,6 +8,8 @@
 import express from 'express'
 import helmet from 'helmet'
 import logger from 'morgan'
+import cors from 'cors'
+// import { corsOptions } from './config/cors.js'
 import { router } from './routes/router.js'
 import { connectDB } from './config/mongoose.js'
 import { rateLimiter } from './config/rate-limit.js'
@@ -19,6 +21,9 @@ try {
 
   // Add helmet for app-security.
   app.use(helmet())
+
+  // Allow requests from other servers.
+  app.use(cors())
 
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))
