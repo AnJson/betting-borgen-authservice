@@ -34,7 +34,6 @@ export class AccountController {
         algorithm: 'RS256',
         expiresIn: process.env.ACCESS_TOKEN_LIFE
       })
-      console.log('im here')
 
       // Authentication successful.
       res

@@ -19,11 +19,11 @@ try {
 
   const app = express()
 
-  // Add helmet for app-security.
-  app.use(helmet())
-
   // Allow requests from other servers.
   app.use(cors())
+
+  // Add helmet for app-security.
+  app.use(helmet())
 
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))
