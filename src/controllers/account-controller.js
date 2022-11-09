@@ -43,7 +43,8 @@ export class AccountController {
           access_token: accessToken,
           firstname: formattedUser.firstname,
           lastname: formattedUser.lastname,
-          id: formattedUser.id
+          id: formattedUser.id,
+          expiresIn: process.env.ACCESS_TOKEN_LIFE
         })
     } catch (error) {
       // Authentication failed or server-error.
